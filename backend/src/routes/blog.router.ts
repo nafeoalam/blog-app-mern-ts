@@ -6,5 +6,5 @@ const router = express.Router();
 
 //PUBLIC
 router.get('/', readBlogs);
-router.post('/blogs/{blogId}', readBlog);
+// router.post('/blogs/{blogId}', readBlog);
 export default router;
