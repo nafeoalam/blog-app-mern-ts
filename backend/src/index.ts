@@ -7,8 +7,6 @@ import config from './config/config';
 import mongoose from 'mongoose';
 import cors from 'cors';
 
-
-
 const NAMESPACE: string = 'Server';
 const app = express();
 

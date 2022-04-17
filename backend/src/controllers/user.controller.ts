@@ -8,6 +8,7 @@ const JWT_SECRET: Secret = process.env.JWT_SECRET || 'JWT_SECRET';
 
 export const registerUser = async (req: Request, res: Response) => {
     try {
+        console.log('TEST')
         const { email, password } = req.body;
 
         if (!email || !password) {
@@ -15,6 +16,7 @@ export const registerUser = async (req: Request, res: Response) => {
         }
 
         const savedUser = await User.findOne({ email: email });
+
         if (savedUser) {
             return res.status(422).json({ error: 'Already Registered' });
         }
@@ -27,6 +29,7 @@ export const registerUser = async (req: Request, res: Response) => {
             password: hashedPassword
         };
         const newUser = new User(user);
+
         await newUser.save();
         res.status(200).json(newUser);
     } catch (err) {
