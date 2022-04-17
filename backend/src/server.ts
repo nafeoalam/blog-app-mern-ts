@@ -46,7 +46,7 @@ app.use((req, res, next) => {
 /** Routes go here */
 
 import BlogRoutes from './routes/blog.routes';
-app.use('/api', BlogRoutes);
+app.use('/api/blogs', BlogRoutes);
 
 
 /** Error handling */
