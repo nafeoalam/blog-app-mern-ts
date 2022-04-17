@@ -1,9 +1,9 @@
-import {  Request, Response } from 'express';
+import { Request, Response } from 'express';
 
 
 export const readBlogs = async (req: Request, res: Response) => {
     try {
-        res.status(200).send("Hello Node Js Blog Working!");
+        res.status(200).send("Hello Node Js Blog Working OK !");
     } catch (error) {
         res.status(500).send(error);
     }
@@ -15,7 +15,7 @@ export const readBlog = async (req: Request, res: Response) => {
         if (!email || !password) {
             return res.status(422).json({ error: 'Please add email and password' });
         }
-        
+
     } catch (err) {
 
     }

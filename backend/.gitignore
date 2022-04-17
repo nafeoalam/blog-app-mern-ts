@@ -10,3 +10,13 @@ certs/**/*
 *.orig.*
 
 package-lock.json
+
+# misc
+.DS_Store
+.env.prod
+.env.local
+.env.*.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.prod.backup

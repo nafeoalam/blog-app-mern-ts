@@ -4,9 +4,9 @@
     "description": "Blog App Backend",
     "main": "dist/index.ts",
     "scripts": {
-        "build": "tsc && node -r ts-node/register/transpile-only -r tsconfig-paths/register build/index.js",
-        "start:prod": "yarn build",
-        "start": "nodemon -e ts,js --exec ts-node -r tsconfig-paths/register ./src/index.ts"
+        "build": "NODE_ENV=prod tsc && node -r ts-node/register/transpile-only -r tsconfig-paths/register build/index.js",
+        "prod": "yarn build",
+        "dev": "nodemon -r tsconfig-paths/register ./src/index.ts"
     },
     "author": "Nafeo",
     "license": "ISC",
