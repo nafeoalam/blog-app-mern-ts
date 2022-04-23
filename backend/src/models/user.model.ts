@@ -1,10 +1,9 @@
 import mongoose, { Schema, Document } from 'mongoose';
-import bcrypt from 'bcrypt-nodejs';
-const salt: string = '12';
 
 interface IUser extends Document {
     email: string;
     password: string;
+    image: string;
 }
 const userSchema: Schema<IUser> = new Schema({
     id: {
@@ -19,6 +18,9 @@ const userSchema: Schema<IUser> = new Schema({
     password: {
         type: String,
         required: [true, 'Password is required']
+    },
+    image: {
+        type: String
     }
 });
 

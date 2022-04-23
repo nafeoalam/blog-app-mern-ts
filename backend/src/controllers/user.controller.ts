@@ -31,7 +31,7 @@ export const registerUser = async (req: Request, res: Response) => {
         const newUser = new User(user);
 
         await newUser.save();
-        res.status(200).json(newUser);
+        res.status(201).json(newUser);
     } catch (err) {
         res.status(500).json(err);
     }

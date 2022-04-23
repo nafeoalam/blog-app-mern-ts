@@ -1,7 +1,13 @@
-import mongoose from 'mongoose';
-import { Schema } from 'mongoose';
+import mongoose, { Schema, Document } from 'mongoose';
 
-const blogSchema = new Schema({
+interface IBlog extends Document {
+    title: String;
+    content: String;
+    date: Date;
+    comments?: Array<object>;
+}
+
+const blogSchema: Schema<IBlog> = new Schema({
     title: {
         type: String,
         required: true
@@ -13,7 +19,23 @@ const blogSchema = new Schema({
     date: {
         type: Date,
         default: Date.now
-    }
+    },
+    comments: [
+        {
+            content: {
+                type: String,
+                required: true
+            },
+            date: {
+                type: Date,
+                default: Date.now
+            },
+            userId: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'User'
+            },
+        }
+    ]
 });
 
 export default mongoose.model('Blog', blogSchema);
