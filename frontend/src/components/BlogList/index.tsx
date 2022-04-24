@@ -1,10 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
-import Button from "@mui/material/Button";
-import { Grid, Pagination } from "@mui/material";
-import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
-import BlogItem from "./BlogItem";
+import { Grid, Pagination, Skeleton } from "@mui/material";
+import BlogItem from "./BlogItems/BlogItem";
 import NestedModal from "./AddBlogModal";
+import "../../App.css";
+import BlogItems from "./BlogItems";
 
 export interface IBlog {
   title: string;
@@ -12,10 +11,20 @@ export interface IBlog {
   date: string;
 }
 
+export interface IPaginationObject {
+  currentPage: number;
+  itemsPerPage: number;
+}
+
 const BlogListBlock = () => {
   const mounted = useRef(false);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [blogList, setBlogList] = useState<Array<IBlog>>([]);
+
+  const [paginationObject, setPaginationObject] = useState<IPaginationObject>({
+    currentPage: 1,
+    itemsPerPage: 6,
+  });
 
   const getBlogs = useCallback(async () => {
     //Service Call Here
@@ -46,9 +55,24 @@ const BlogListBlock = () => {
         content: "Blog 2 Content",
         date: "2/2/2022",
       },
+      {
+        title: "Blog 2",
+        content: "Blog 2 Content",
+        date: "2/2/2022",
+      },
+      {
+        title: "Blog 2",
+        content: "Blog 2 Content",
+        date: "2/2/2022",
+      },
+      {
+        title: "Blog 2",
+        content: "Blog 2 Content",
+        date: "2/2/2022",
+      },
     ];
     if (mounted.current) {
-      setLoading(false);
+      setIsLoading(false);
       setBlogList(blogs);
     }
   }, []);
@@ -67,24 +91,25 @@ const BlogListBlock = () => {
         <Grid item container xs={12}>
           <NestedModal title="Add New Blog" />
         </Grid>
-        <Grid item container xs={12}>
-          {!loading ? (
-            <Grid container spacing={2}>
-              {blogList.map((blog: IBlog) => (
-                <BlogItem blog={blog} />
-              ))}
-            </Grid>
-          ) : loading ? (
-            <SkeletonTheme highlightColor="#fff">
-              <Skeleton count={1} duration={2} height={40} />
-            </SkeletonTheme>
-          ) : (
-            ""
-          )}
-        </Grid>
-        <Grid item container xs={12} justifyContent="center">
-            <Pagination count={10} variant="outlined" shape="rounded" />
-        </Grid>
+        {blogList && <>
+          <Grid item container xs={12}>
+            <BlogItems
+              blogList={blogList}
+              pagination={paginationObject}
+              isLoading={isLoading}
+            />
+          </Grid>
+          <Grid item container xs={12} justifyContent="center">
+            <Pagination
+              count={Math.ceil(blogList.length/paginationObject.itemsPerPage)}
+              variant="outlined"
+              shape="rounded"
+              onChange={(event, value) =>
+                setPaginationObject({ ...paginationObject, currentPage: value })
+              }
+            />
+          </Grid>
+        </>}
       </Grid>
     </>
   );
