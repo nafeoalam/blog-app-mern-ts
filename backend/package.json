@@ -2,11 +2,11 @@
     "name": "backend",
     "version": "1.0.0",
     "description": "Blog App Backend",
-    "main": "dist/index.ts",
+    "main": "dist/server.ts",
     "scripts": {
         "build": "NODE_ENV=prod tsc && node -r ts-node/register/transpile-only -r tsconfig-paths/register build/index.js",
         "prod": "yarn build",
-        "dev": "nodemon -r tsconfig-paths/register ./src/index.ts"
+        "dev": "nodemon -r tsconfig-paths/register ./src/server.ts"
     },
     "author": "Nafeo",
     "license": "ISC",

@@ -1,14 +1,16 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Grid, Pagination, Skeleton } from "@mui/material";
-import BlogItem from "./BlogItems/BlogItem";
-import NestedModal from "./AddBlogModal";
+import { Grid, Pagination } from "@mui/material";
+import AddBlogModal from "./AddBlogModal";
 import "../../App.css";
 import BlogItems from "./BlogItems";
+import { PROTECTED_URL } from "config/axios.config";
 
 export interface IBlog {
+  _id: string;
   title: string;
   content: string;
-  date: string;
+  create_date?: string;
+  comments?: [];
 }
 
 export interface IPaginationObject {
@@ -26,54 +28,31 @@ const BlogListBlock = () => {
     itemsPerPage: 6,
   });
 
+  // const handleSelect = useCallback(
+  //   (item) => (e) => {
+  //     select(e, item);
+  //     const index = options.findIndex(
+  //       (findItem) => findItem.value === item.value,
+  //     );
+  //     setIndex(index);
+  //   },
+  //   [state],
+  // );
+
+  // <button onClick={handleSelect(item)} className="ml-1">
+
   const getBlogs = useCallback(async () => {
-    //Service Call Here
-    // const data = await yourAsyncFunction(...);
-    const blogs = [
-      {
-        title: "Blog 1",
-        content: "Blog 1 Content",
-        date: "2/2/2022",
-      },
-      {
-        title: "Blog 2",
-        content: "Blog 2 Content",
-        date: "2/2/2022",
-      },
-      {
-        title: "Blog 2",
-        content: "Blog 2 Content",
-        date: "2/2/2022",
-      },
-      {
-        title: "Blog 2",
-        content: "Blog 2 Content",
-        date: "2/2/2022",
-      },
-      {
-        title: "Blog 2",
-        content: "Blog 2 Content",
-        date: "2/2/2022",
-      },
-      {
-        title: "Blog 2",
-        content: "Blog 2 Content",
-        date: "2/2/2022",
-      },
-      {
-        title: "Blog 2",
-        content: "Blog 2 Content",
-        date: "2/2/2022",
-      },
-      {
-        title: "Blog 2",
-        content: "Blog 2 Content",
-        date: "2/2/2022",
-      },
-    ];
-    if (mounted.current) {
+    try {
+      setIsLoading(true);
+      const { data: blogs } = await PROTECTED_URL.get("/blogs");
+
+      if (mounted.current) {
+        setIsLoading(false);
+        setBlogList(blogs);
+      }
+    } catch (err) {
+      console.log(err);
       setIsLoading(false);
-      setBlogList(blogs);
     }
   }, []);
 
@@ -89,27 +68,34 @@ const BlogListBlock = () => {
     <>
       <Grid container spacing={4}>
         <Grid item container xs={12}>
-          <NestedModal title="Add New Blog" />
+          <AddBlogModal modalTitle="Add New Post" setBlogList={setBlogList} />
         </Grid>
-        {blogList && <>
-          <Grid item container xs={12}>
-            <BlogItems
-              blogList={blogList}
-              pagination={paginationObject}
-              isLoading={isLoading}
-            />
-          </Grid>
-          <Grid item container xs={12} justifyContent="center">
-            <Pagination
-              count={Math.ceil(blogList.length/paginationObject.itemsPerPage)}
-              variant="outlined"
-              shape="rounded"
-              onChange={(event, value) =>
-                setPaginationObject({ ...paginationObject, currentPage: value })
-              }
-            />
-          </Grid>
-        </>}
+        {blogList && (
+          <>
+            <Grid item container xs={12}>
+              <BlogItems
+                blogList={blogList}
+                pagination={paginationObject}
+                isLoading={isLoading}
+              />
+            </Grid>
+            <Grid item container xs={12} justifyContent="center">
+              <Pagination
+                count={Math.ceil(
+                  blogList.length / paginationObject.itemsPerPage
+                )}
+                variant="outlined"
+                shape="rounded"
+                onChange={(event, value) =>
+                  setPaginationObject({
+                    ...paginationObject,
+                    currentPage: value,
+                  })
+                }
+              />
+            </Grid>
+          </>
+        )}
       </Grid>
     </>
   );

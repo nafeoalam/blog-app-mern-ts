@@ -6,24 +6,21 @@ import BlogItem from "./BlogItem";
 interface IProps {
   blogList: IBlog[];
   pagination: IPaginationObject;
-  isLoading: boolean
+  isLoading: boolean;
 }
 
 const BlogItems = ({ blogList, pagination, isLoading }: IProps) => {
-
-
   // Get current posts
   const indexOfLastPost = pagination.currentPage * pagination.itemsPerPage;
   const indexOfFirstPost = indexOfLastPost - pagination.itemsPerPage;
   const currentBlogs = blogList.slice(indexOfFirstPost, indexOfLastPost);
 
-
   return (
     <>
       {!isLoading ? (
         <Grid container spacing={2}>
-          {currentBlogs.map((blog: IBlog) => (
-            <BlogItem blog={blog} />
+          {currentBlogs.map((blog: IBlog, index) => (
+            <BlogItem key={blog._id ? blog._id : `blog-${index}`} blog={blog} />
           ))}
         </Grid>
       ) : isLoading ? (

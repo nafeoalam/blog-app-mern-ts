@@ -1,6 +1,5 @@
 import dotenv from 'dotenv';
 dotenv.config();
-import http from 'http';
 import express, { Request, Response, NextFunction } from 'express';
 import logging from './config/logging';
 import config from './config/config';

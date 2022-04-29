@@ -14,14 +14,14 @@ interface IProps {
 
 const BlogItem = ({ blog }: IProps) => {
   return (
-    <Grid item xs={6} >
+    <Grid item xs={6}>
       <Card sx={{ minWidth: 275 }}>
         <CardContent>
           <Typography variant="h5" component="div">
             {blog.title}
           </Typography>
           <Typography sx={{ mb: 1.5 }} color="text.secondary">
-            {blog.date}
+            {blog.create_date ? new Date(blog.create_date).toLocaleString() : ""}
           </Typography>
           <Typography variant="body2">{blog.content}</Typography>
         </CardContent>

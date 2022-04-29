@@ -3,7 +3,7 @@ import mongoose, { Schema, Document } from 'mongoose';
 interface IBlog extends Document {
     title: String;
     content: String;
-    date: Date;
+    create_date: Date;
     comments?: Array<object>;
 }
 
@@ -16,7 +16,7 @@ const blogSchema: Schema<IBlog> = new Schema({
         type: String,
         required: true
     },
-    date: {
+    create_date: {
         type: Date,
         default: Date.now
     },

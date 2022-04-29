@@ -12,13 +12,13 @@ export const registerUser = async (req: Request, res: Response) => {
         const { email, password } = req.body;
 
         if (!email || !password) {
-            return res.status(422).json({ error: 'Please add all the fields' });
+            return res.status(422).json({ err: 'Please add all the fields' });
         }
 
         const savedUser = await User.findOne({ email: email });
 
         if (savedUser) {
-            return res.status(422).json({ error: 'Already Registered' });
+            return res.status(422).json({ err: 'Already Registered' });
         }
         const hashedPassword = await bcrypt.hash(password, 12);
         const userId = `cus-${new Date().getTime()}`;
@@ -41,11 +41,11 @@ export const loginUser = async (req: Request, res: Response) => {
     try {
         const { email, password } = req.body;
         if (!email || !password) {
-            return res.status(422).json({ error: 'Please add email and password' });
+            return res.status(422).json({ err: 'Please add email and password' });
         }
         const savedUser: any = await User.findOne({ email: email });
         if (!savedUser) {
-            return res.status(422).json({ error: 'Email not found' });
+            return res.status(422).json({ err: 'Email not found' });
         }
         const matchPassword = await bcrypt.compare(password, savedUser.password);
         if (matchPassword) {
@@ -53,7 +53,7 @@ export const loginUser = async (req: Request, res: Response) => {
             const { _id, id, email } = savedUser;
             res.json({ token, user: { _id, id, email } });
         } else {
-            res.status(422).json({ error: 'Invalid Email or password' });
+            res.status(422).json({ err: 'Invalid Email or password' });
         }
     } catch (err) {
         res.status(500).json(err);
