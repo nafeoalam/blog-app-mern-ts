@@ -1,10 +1,12 @@
 import express from 'express';
-import { readBlogs, readBlog, createBlog } from '@/controllers/blog.controller';
+import authenticate from '@/middleware/authentication';
+import { readBlogs, readBlog, createBlog, updateComments } from '@/controllers/blog.controller';
 
 const router = express.Router();
 
-//PUBLIC
-router.get('/', readBlogs);
+
+router.put('/:blogId/comments', updateComments);
+router.get('/:blogId', readBlog);
+router.get('/', authenticate, readBlogs); // TODO: Full implementation of authenticate
 router.post('/', createBlog);
-router.post('/{blogId}', readBlog);
 export default router;

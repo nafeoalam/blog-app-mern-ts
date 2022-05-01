@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
-import Blog from '@/models/blog.model';
+import Blog, { IComment } from '@/models/blog.model';
 import HttpStatusCode from '@/utils/httpStatusCodes';
 
 export const readBlogs = async (req: Request, res: Response) => {
     try {
-        const blogs = await Blog.find()
+        const blogs = await Blog.find();
         res.status(HttpStatusCode.OK).send(blogs);
     } catch (err) {
         res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).send(err);
@@ -13,11 +13,15 @@ export const readBlogs = async (req: Request, res: Response) => {
 
 export const readBlog = async (req: Request, res: Response) => {
     try {
-        const { email, password } = req.body;
-        if (!email || !password) {
-            return res.status(HttpStatusCode.UNPROCESSABLE_ENTITY).json({ err: 'Please add email and password' });
+        const { blogId } = req.params;
+        if (!blogId) {
+            return res.status(HttpStatusCode.UNPROCESSABLE_ENTITY).json({ err: 'Please specify blog Id' });
         }
-    } catch (err) {}
+        const blog = await Blog.findById(blogId);
+        res.status(HttpStatusCode.OK).send(blog);
+    } catch (err) {
+        res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).send(err);
+    }
 };
 
 export const createBlog = async (req: Request, res: Response) => {
@@ -37,6 +41,26 @@ export const createBlog = async (req: Request, res: Response) => {
     } catch (err) {
         console.log(err);
         res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).send(err);
+    }
+};
 
+export const updateComments = async (req: Request, res: Response) => {
+    try {
+        const { blogId } = req.params;
+        const { comments }: { comments: any } = req.body;
+
+        const update = await Blog.findByIdAndUpdate(
+            blogId,
+            {
+                $push: {
+                    comments: comments
+                }
+            },
+            { new: true }
+        );
+
+        res.status(HttpStatusCode.OK).send(update);
+    } catch (err) {
+        res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).send(err);
     }
 };

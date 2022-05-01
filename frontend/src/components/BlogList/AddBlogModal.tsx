@@ -124,6 +124,7 @@ export default function AddBlogModal({ modalTitle, setBlogList }: IProps) {
                     content: e.currentTarget.value,
                   })
                 }
+                rows={4}
                 fullWidth
               />
             </Grid>

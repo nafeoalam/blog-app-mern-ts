@@ -15,9 +15,10 @@ const BlogItems = ({ blogList, pagination, isLoading }: IProps) => {
   const indexOfFirstPost = indexOfLastPost - pagination.itemsPerPage;
   const currentBlogs = blogList.slice(indexOfFirstPost, indexOfLastPost);
 
+
   return (
     <>
-      {!isLoading ? (
+      {(!isLoading && currentBlogs) ? (
         <Grid container spacing={2}>
           {currentBlogs.map((blog: IBlog, index) => (
             <BlogItem key={blog._id ? blog._id : `blog-${index}`} blog={blog} />
@@ -25,8 +26,8 @@ const BlogItems = ({ blogList, pagination, isLoading }: IProps) => {
         </Grid>
       ) : isLoading ? (
         <Grid container spacing={2} className="avatarSkeletonContainer">
-          {[...new Array(6)].map(() => (
-            <Skeleton className="avatarLoader" height={200} />
+          {[...new Array(6)].map((item, index) => (
+            <Skeleton key={`blogSkeleton-${index}`} className="avatarLoader" height={200} />
           ))}
         </Grid>
       ) : (

@@ -4,7 +4,7 @@ import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import { IBlog, IPaginationObject } from "..";
+import { IBlog } from "..";
 import { Link } from "react-router-dom";
 import { Grid } from "@mui/material";
 
@@ -26,7 +26,7 @@ const BlogItem = ({ blog }: IProps) => {
           <Typography variant="body2">{blog.content}</Typography>
         </CardContent>
         <CardActions>
-          <Link to="/blogs/:id">Blog detail</Link>
+          <Link to={`/blogs/${blog._id}`}>Blog detail</Link>
         </CardActions>
       </Card>
     </Grid>

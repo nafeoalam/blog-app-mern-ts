@@ -1,10 +1,17 @@
 import mongoose, { Schema, Document } from 'mongoose';
 
+export interface IComment {
+    name: string;
+    text: string;
+    date?: string;
+    comments?: Array<IComment>;
+  }
+
 interface IBlog extends Document {
     title: String;
     content: String;
     create_date: Date;
-    comments?: Array<object>;
+    comments?: Array<IComment>;
 }
 
 const blogSchema: Schema<IBlog> = new Schema({
@@ -22,18 +29,27 @@ const blogSchema: Schema<IBlog> = new Schema({
     },
     comments: [
         {
-            content: {
+            name: {
+                type: String,
+                required: true
+            },
+            text: {
                 type: String,
                 required: true
             },
             date: {
                 type: Date,
+                required: true,
                 default: Date.now
             },
-            userId: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'User'
-            },
+            comments: {
+                type: Array
+            }
+            // TODO
+            // userId: {
+            //     type: mongoose.Schema.Types.ObjectId,
+            //     ref: 'User'
+            // },
         }
     ]
 });
