@@ -30,42 +30,48 @@ const CommentItem = ({ name, text, date, comments = [] }: IProps) => {
     <>
       <Card>
         <CardContent>
+          <Grid container minHeight={50}>
+            <Grid item xs={2} md={1}>
+              <Avatar>H</Avatar>
+            </Grid>
+            <Grid item xs={10} md={11}>
+              <Typography color={"blue"} fontWeight={800}>
+                {name}
+              </Typography>
+              <Typography color={"gray"}>
+                {new Date(date).toUTCString()}
+              </Typography>
+            </Grid>
+          </Grid>
           <Grid container>
-            <Grid container spacing={0} minHeight={50}>
-              <Grid item xs={2} md={1} spacing={0}>
-                <Typography paddingLeft={1}>
-                  <Avatar>H</Avatar>
-                </Typography>
-              </Grid>
-              <Grid item xs={10} md={11}>
-                <Typography color={"blue"} fontWeight={800}>
-                  {name}
-                </Typography>
-                <Typography color={"gray"}>
-                  {new Date(date).toUTCString()}
-                </Typography>
-              </Grid>
+            <Grid item xs={12} md={12}>
+              <Typography paddingTop={2} color={"black"}>
+                {text}
+              </Typography>
+              <Typography paddingTop={2} color={"blue"} fontWeight={400}>
+                {"Reply"}
+              </Typography>
             </Grid>
-            <Grid container spacing={2}>
-              <Grid item xs={12} md={12} padding={2}>
-                <Typography paddingTop={2} color={'black'}>{text}</Typography>
-                <Typography paddingTop={2} color={'blue'} fontWeight={400}>{"Reply"}</Typography>
-              </Grid>
-            </Grid>
-
-            {comments.map((comment, index) => {
-              return (
-                <CommentItem
-                  key={index}
-                  name={comment.name}
-                  text={comment.text}
-                  date={comment.date}
-                  comments={comment.comments}
-                />
-              );
-            })}
           </Grid>
         </CardContent>
+        {comments?.length > 0 && (
+          <CardContent>
+            {comments.map((comment, index) => {
+              return (
+                <div key={`${comment._id}-${index}-div`}>
+                  <CommentItem
+                    key={`${comment._id}-${index}`}
+                    name={comment.name}
+                    text={comment.text}
+                    date={comment.date}
+                    comments={comment.comments}
+                  />
+                  <br />
+                </div>
+              );
+            })}
+          </CardContent>
+        )}
       </Card>
     </>
   );
