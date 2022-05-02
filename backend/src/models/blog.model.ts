@@ -1,11 +1,12 @@
 import mongoose, { Schema, Document } from 'mongoose';
 
 export interface IComment {
+    commentId: string;
     name: string;
     text: string;
     date?: string;
     comments?: Array<IComment>;
-  }
+}
 
 interface IBlog extends Document {
     title: String;
@@ -41,6 +42,9 @@ const blogSchema: Schema<IBlog> = new Schema({
                 type: Date,
                 required: true,
                 default: Date.now
+            },
+            commentId: {
+                type: String
             },
             comments: {
                 type: Array

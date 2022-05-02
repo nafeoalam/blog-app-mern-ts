@@ -47,7 +47,7 @@ export const createBlog = async (req: Request, res: Response) => {
 export const updateComments = async (req: Request, res: Response) => {
     try {
         const { blogId } = req.params;
-        const { comments }: { comments: any } = req.body;
+        const { comments }: { comments: IComment } = req.body;
 
         const update = await Blog.findByIdAndUpdate(
             blogId,

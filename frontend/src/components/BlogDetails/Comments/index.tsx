@@ -1,11 +1,10 @@
-import React from "react";
 import CommentItem from "./CommentItem";
 
 export interface IComment {
-  _id: string;
+  commentId: string;
   name: string;
   text: string;
-  date: string;
+  date?: string;
   comments?: Array<IComment>;
 }
 
@@ -43,7 +42,7 @@ const Comments = ({ comments }: IProps) => {
   //       },
   //       {
   //         _id: "1234",
-  //         name: "Arham Mahmood Bhuiyan",
+  //         name: "Arham Mahmood Bhuiyan",`
   //         text: "Hellow Arham",
   //         date: "2022-05-01T18:26:37.618Z",
   //       },
@@ -62,9 +61,9 @@ const Comments = ({ comments }: IProps) => {
       {comments &&
         comments.map((comment, index) => {
           return (
-            <div key={`${comment._id}-${index}-div`}>
+            <div key={`${comment.commentId}-${index}-div`}>
               <CommentItem
-                key={`${comment._id}-${index}`}
+                key={`${comment.commentId}-${index}`}
                 name={comment.name}
                 text={comment.text}
                 date={comment.date}

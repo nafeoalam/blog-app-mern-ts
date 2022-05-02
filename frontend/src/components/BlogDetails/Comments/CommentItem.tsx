@@ -13,17 +13,9 @@ import { IComment } from ".";
 interface IProps {
   name: string;
   text: string;
-  date: string;
+  date?: string;
   comments?: Array<IComment>;
 }
-
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: "center",
-  color: theme.palette.text.secondary,
-}));
 
 const CommentItem = ({ name, text, date, comments = [] }: IProps) => {
   return (
@@ -39,7 +31,7 @@ const CommentItem = ({ name, text, date, comments = [] }: IProps) => {
                 {name}
               </Typography>
               <Typography color={"gray"}>
-                {new Date(date).toUTCString()}
+                {date && new Date(date).toUTCString()}
               </Typography>
             </Grid>
           </Grid>
@@ -58,9 +50,9 @@ const CommentItem = ({ name, text, date, comments = [] }: IProps) => {
           <CardContent>
             {comments.map((comment, index) => {
               return (
-                <div key={`${comment._id}-${index}-div`}>
+                <div key={`${comment.commentId}-${index}-div`}>
                   <CommentItem
-                    key={`${comment._id}-${index}`}
+                    key={`${comment.commentId}-${index}`}
                     name={comment.name}
                     text={comment.text}
                     date={comment.date}

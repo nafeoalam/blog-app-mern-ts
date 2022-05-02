@@ -6,11 +6,12 @@ import { PROTECTED_URL } from "config/axios.config";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import { useParams } from "react-router-dom";
-import Comments from "./Comments";
+import Comments, { IComment } from "./Comments";
 
-interface IAddNewCommentForm {
+interface IAddNewCommentForm extends IComment{
   name: string;
   text: string;
+  commentId: string;
 }
 
 const BlogDetailsBlock = () => {
@@ -22,6 +23,7 @@ const BlogDetailsBlock = () => {
     useState<IAddNewCommentForm>({
       name: "",
       text: "",
+      commentId: new Date().getTime().toString()
     });
   const [isBlogLoading, setIsBlogLoading] = useState<boolean>(false);
 
@@ -30,7 +32,7 @@ const BlogDetailsBlock = () => {
       setIsBlogLoading(true);
       const { data: blog } = await PROTECTED_URL.get(`/blogs/${blogId}`);
 
-      console.log(blog, 'blog')
+      console.log(blog, 'Current blog')
       if (mounted.current) {
         setBlog(blog);
         setIsBlogLoading(false);
@@ -87,6 +89,7 @@ const BlogDetailsBlock = () => {
                       setAddNewCommentForm({
                         ...addNewCommentForm,
                         name: e.currentTarget.value,
+                        commentId: new Date().getTime().toString()
                       })
                     }
                   />
@@ -102,6 +105,7 @@ const BlogDetailsBlock = () => {
                       setAddNewCommentForm({
                         ...addNewCommentForm,
                         text: e.currentTarget.value,
+                        commentId: new Date().getTime().toString()
                       })
                     }
                   />
