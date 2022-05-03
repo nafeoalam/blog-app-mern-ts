@@ -24,6 +24,7 @@ const MONGO = {
 
 const config = {
     server: SERVER,
+    host: SERVER_HOSTNAME,
     db: MONGO
 };
 

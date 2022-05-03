@@ -1,1 +1,18 @@
-# blog-app-mern-ts
+# Blog App MERN Typescript
+
+# Start API server:
+1. Go to `backend` and create `.env` file
+2. Copy variables from `.env.example` to `.env`
+3. Run `yarn` 
+4. Run `yarn dev` to start dev API service on `localhost:4000`
+
+
+
+# Start React App:
+1. Go to `frontend` and create `.env.local` file
+2. Copy variables from `.env.sample` to `.env`
+3. Run `yarn` 
+4. Run `yarn start` to start dev API service on `localhost:3000`
+
+
+

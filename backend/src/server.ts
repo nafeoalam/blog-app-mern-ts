@@ -61,5 +61,5 @@ app.use((req: Request, res: Response) => {
 // Mongoose Connection
 mongoose
     .connect(config.db.connectionUrl)
-    .then(() => app.listen(config.server.port, () => console.log(`Server Running on Port: http://localhost:${config.server.port}`)))
+    .then(() => app.listen(config.server.port, () => console.log(`Server Running on Port: http://${config.host}:${config.server.port}`)))
     .catch((error) => console.log(`${error} did not connect`));
