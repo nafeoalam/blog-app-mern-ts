@@ -1,18 +1,21 @@
+
+import { IBlog } from "components/BlogList";
 import CommentItem from "./CommentItem";
 
 export interface IComment {
   commentId: string;
   name: string;
   text: string;
-  date?: string;
-  comments?: Array<IComment>;
+  date: string;
+  comments: Array<IComment>;
 }
 
 interface IProps {
-  comments?: IComment[];
+  blog: IBlog
 }
 
-const Comments = ({ comments }: IProps) => {
+const Comments = ({ blog }: IProps) => {
+
   // const comments: IComment[] = [
   //   {
   //     _id: "123",
@@ -56,10 +59,11 @@ const Comments = ({ comments }: IProps) => {
   //   },
   // ];
 
+
   return (
     <>
-      {comments &&
-        comments.map((comment, index) => {
+      {blog.comments &&
+        blog.comments.map((comment, index) => {
           return (
             <div key={`${comment.commentId}-${index}-div`}>
               <CommentItem
@@ -68,7 +72,8 @@ const Comments = ({ comments }: IProps) => {
                 text={comment.text}
                 date={comment.date}
                 comments={comment.comments}
-                commentId={comment.commentId}
+                previousCommentIds={[comment.commentId]}
+                blog= {blog}
               />
               <br />
             </div>

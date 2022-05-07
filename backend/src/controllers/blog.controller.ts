@@ -4,7 +4,8 @@ import HttpStatusCode from '@/utils/httpStatusCodes';
 
 export const readBlogs = async (req: Request, res: Response) => {
     try {
-        const blogs = await Blog.find().sort({ create_date: -1 });
+        const blogs = await Blog.find()
+        // const blogs = await Blog.find().sort({ create_date: -1 });
         res.status(HttpStatusCode.OK).send(blogs);
     } catch (err) {
         res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).send(err);
@@ -53,6 +54,27 @@ export const updateComments = async (req: Request, res: Response) => {
             blogId,
             {
                 $push: {
+                    comments: comments
+                }
+            },
+            { new: true }
+        );
+
+        res.status(HttpStatusCode.OK).send(update);
+    } catch (err) {
+        res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).send(err);
+    }
+};
+
+export const addComments = async (req: Request, res: Response) => {
+    try {
+        const { blogId } = req.params;
+        const { comments }: { comments: IComment } = req.body;
+
+        const update = await Blog.findByIdAndUpdate(
+            blogId,
+            {
+                $set: {
                     comments: comments
                 }
             },

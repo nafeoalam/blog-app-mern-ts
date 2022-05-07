@@ -10,18 +10,21 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { blue } from "@mui/material/colors";
 import { IComment } from ".";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IAddNewCommentForm } from "components/BlogDetails";
+import { IRootState } from "redux/reducers";
+import { useDispatch, useSelector } from "react-redux";
+import { getBlogs } from "redux/actions/blogActions";
+import { IBlog } from "components/BlogList";
 import { PROTECTED_URL } from "config/axios.config";
-
 interface IProps {
   name: string;
   text: string;
+  blog: IBlog;
   date?: string;
   comments?: Array<IComment>;
-  commentId: string;
+  previousCommentIds?: string[];
 }
 
 const CommentItem = ({
@@ -29,7 +32,8 @@ const CommentItem = ({
   text,
   date,
   comments = [],
-  commentId,
+  previousCommentIds,
+  blog,
 }: IProps) => {
   const [isReplyActive, setIsReplyActive] = useState<boolean>(false);
 
@@ -37,21 +41,46 @@ const CommentItem = ({
     useState<IAddNewCommentForm>({
       name: "",
       text: "",
+      comments: [],
+      date: new Date().toISOString(),
       commentId: new Date().getTime().toString(),
     });
 
   const handleCommentSubmit = async () => {
     try {
-      console.log(addNewCommentForm)
-      console.log(commentId)
-      // const { data: updatedBlog } = await PROTECTED_URL.put(
-      //   `/blogs/${blogId}/comments`,
-      //   {
-      //     comments: addNewCommentForm,
-      //   }
-      // );
+      const findId = (commentId: any, arr: any) => {
+        return arr.reduce((a: any, item: any) => {
+          if (a) return a;
+          if (item.commentId === commentId) return item;
+          if (item.comments.length > 0) return findId(commentId, item.comments);
+        }, null);
+      };
+      
+      if (previousCommentIds && previousCommentIds?.length > 0 && blog) {
+        const currentComment: IComment = findId(
+          previousCommentIds[previousCommentIds?.length - 1],
+          blog.comments
+        );
 
-      // setBlog(updatedBlog);
+        if (currentComment && currentComment.comments.length > 0) {
+          currentComment.comments = [
+            ...currentComment.comments,
+            { ...addNewCommentForm, date: new Date().toISOString() },
+          ];
+        } else {
+          currentComment.comments = [
+            { ...addNewCommentForm, date: new Date().toISOString() },
+          ];
+        }
+
+        const { data: updatedBlog } = await PROTECTED_URL.put(
+          `/blogs/${blog._id}/push-comments`,
+          {
+            comments: blog.comments,
+          }
+        );
+        console.log(updatedBlog, "updatedBlog");
+      }
     } catch (err) {
       console.log(err, "err");
     }
@@ -153,6 +182,9 @@ const CommentItem = ({
         {comments?.length > 0 && (
           <CardContent>
             {comments.map((comment, index) => {
+              const updatedCommentIds = previousCommentIds
+                ? [...previousCommentIds, comment.commentId]
+                : [comment.commentId];
               return (
                 <div key={`${comment.commentId}-${index}-div`}>
                   <CommentItem
@@ -161,7 +193,8 @@ const CommentItem = ({
                     text={comment.text}
                     date={comment.date}
                     comments={comment.comments}
-                    commentId={comment.commentId}
+                    previousCommentIds={updatedCommentIds}
+                    blog={blog}
                   />
                   <br />
                 </div>

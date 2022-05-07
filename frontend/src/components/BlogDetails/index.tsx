@@ -18,14 +18,16 @@ const BlogDetailsBlock = () => {
   const mounted = useRef(false);
   const { blogId } = useParams<any>();
   const [blog, setBlog] = useState<IBlog>();
+  const [isBlogLoading, setIsBlogLoading] = useState<boolean>(false);
 
   const [addNewCommentForm, setAddNewCommentForm] =
     useState<IAddNewCommentForm>({
       name: "",
       text: "",
+      comments:[],
+      date: new Date().toISOString(),
       commentId: new Date().getTime().toString(),
     });
-  const [isBlogLoading, setIsBlogLoading] = useState<boolean>(false);
 
   const getBlogById = useCallback(async () => {
     try {
@@ -134,7 +136,7 @@ const BlogDetailsBlock = () => {
           <br />
           <Card>
             <CardContent>
-              <Comments comments={blog.comments} />
+              <Comments blog={blog} />
             </CardContent>
           </Card>
         </>

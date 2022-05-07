@@ -3,18 +3,16 @@ import { Grid, Pagination } from "@mui/material";
 import AddBlogModal from "./AddBlogModal";
 import "../../App.css";
 import BlogItems from "./BlogItems";
-import { PROTECTED_URL } from "config/axios.config";
 import { useDispatch, useSelector } from "react-redux";
 import { getBlogs } from "redux/actions/blogActions";
 import { IRootState } from "redux/reducers";
-import { createJsxClosingElement } from "typescript";
 
 export interface IBlog {
   _id: string;
   title: string;
   content: string;
   create_date?: string;
-  comments?: [];
+  comments: any[];
 }
 
 export interface IPaginationObject {
