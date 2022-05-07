@@ -37,6 +37,8 @@ const CommentItem = ({
 }: IProps) => {
   const [isReplyActive, setIsReplyActive] = useState<boolean>(false);
 
+  const [currentComments, setCurrentComments] = useState(comments)
+
   const [addNewCommentForm, setAddNewCommentForm] =
     useState<IAddNewCommentForm>({
       name: "",
@@ -55,7 +57,7 @@ const CommentItem = ({
           if (item.comments.length > 0) return findId(commentId, item.comments);
         }, null);
       };
-      
+
       if (previousCommentIds && previousCommentIds?.length > 0 && blog) {
         const currentComment: IComment = findId(
           previousCommentIds[previousCommentIds?.length - 1],
@@ -73,13 +75,15 @@ const CommentItem = ({
           ];
         }
 
-        const { data: updatedBlog } = await PROTECTED_URL.put(
+        await PROTECTED_URL.put(
           `/blogs/${blog._id}/push-comments`,
           {
             comments: blog.comments,
           }
         );
-        console.log(updatedBlog, "updatedBlog");
+
+        setCurrentComments(currentComment.comments)
+
       }
     } catch (err) {
       console.log(err, "err");
@@ -179,9 +183,9 @@ const CommentItem = ({
             </Grid>
           </Grid>
         </CardContent>
-        {comments?.length > 0 && (
+        {currentComments?.length > 0 && (
           <CardContent>
-            {comments.map((comment, index) => {
+            {currentComments.map((comment, index) => {
               const updatedCommentIds = previousCommentIds
                 ? [...previousCommentIds, comment.commentId]
                 : [comment.commentId];

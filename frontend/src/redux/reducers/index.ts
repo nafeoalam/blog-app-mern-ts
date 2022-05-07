@@ -1,4 +1,3 @@
-import { IBlog } from "components/BlogList";
 import { combineReducers } from "redux";
 
 import blogReducer from "./blogReducer";

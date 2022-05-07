@@ -1,10 +1,11 @@
 import express from 'express';
 import authenticate from '@/middleware/authentication';
-import { readBlogs, readBlog, createBlog, updateComments, addComments } from '@/controllers/blog.controller';
+import { readBlogs, readBlog, createBlog, updateComments, addComments, updateBlog } from '@/controllers/blog.controller';
 
 const router = express.Router();
 
 
+router.put('/:blogId', updateBlog); //TODO
 router.put('/:blogId/comments', updateComments);
 router.put('/:blogId/push-comments', addComments);
 router.get('/:blogId', readBlog);

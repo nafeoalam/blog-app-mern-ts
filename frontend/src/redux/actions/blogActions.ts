@@ -15,8 +15,6 @@ export const getBlogs = () => async (dispatch:Dispatch<IAction>) => {
   }
 };
 
-
-
 export const setBlogs = (addNewPostForm: IAddNewPostForm) => async (dispatch: Dispatch<IAction>) => {
   try {
       const { data } = await PROTECTED_URL.post("/blogs", {
@@ -28,4 +26,18 @@ export const setBlogs = (addNewPostForm: IAddNewPostForm) => async (dispatch: Di
 
   }
 }
+
+//TODO:
+export const updateBlog = (addNewPostForm: IAddNewPostForm) => async (dispatch: Dispatch<IAction>) => {
+  try {
+      const { data } = await PROTECTED_URL.put("/blogs", {
+        ...addNewPostForm,
+      });
+      dispatch({ type: UPDATE_BLOG, payload: data })
+  } catch (error:any) {
+    console.log(error.message);
+
+  }
+}
+
 
