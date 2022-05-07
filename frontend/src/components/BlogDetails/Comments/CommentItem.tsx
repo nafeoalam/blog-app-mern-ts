@@ -185,7 +185,7 @@ const CommentItem = ({
         </CardContent>
         {currentComments?.length > 0 && (
           <CardContent>
-            {currentComments.map((comment, index) => {
+            {currentComments.slice(0).reverse().map((comment, index) => {
               const updatedCommentIds = previousCommentIds
                 ? [...previousCommentIds, comment.commentId]
                 : [comment.commentId];

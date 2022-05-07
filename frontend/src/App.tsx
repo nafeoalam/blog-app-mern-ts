@@ -7,13 +7,13 @@ const App = () => {
     <Container disableGutters>
       <CssBaseline />
       <Stack direction="row" spacing={6}>
-        <h4>Blog App</h4>
-        <nav>
-          <Link to="/home">Home</Link> | <Link to="/blogs">Blog</Link>
-        </nav>
+        <Link to="/blogs">
+          <h4>Blogs</h4>
+        </Link>
       </Stack>
 
       <Outlet />
+      <br />
     </Container>
   );
 };

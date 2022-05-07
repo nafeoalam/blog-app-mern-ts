@@ -24,7 +24,7 @@ const BlogDetailsBlock = () => {
     useState<IAddNewCommentForm>({
       name: "",
       text: "",
-      comments:[],
+      comments: [],
       date: new Date().toISOString(),
       commentId: new Date().getTime().toString(),
     });
@@ -134,11 +134,13 @@ const BlogDetailsBlock = () => {
             </CardContent>
           </Card>
           <br />
-          <Card>
-            <CardContent>
-              <Comments blog={blog} />
-            </CardContent>
-          </Card>
+          {blog?.comments.length > 0 && (
+            <Card>
+              <CardContent>
+                <Comments blog={blog} />
+              </CardContent>
+            </Card>
+          )}
         </>
       ) : isBlogLoading ? (
         <Skeleton height={200} />

@@ -1,4 +1,3 @@
-
 import { IBlog } from "components/BlogList";
 import CommentItem from "./CommentItem";
 
@@ -11,59 +10,16 @@ export interface IComment {
 }
 
 interface IProps {
-  blog: IBlog
+  blog: IBlog;
 }
 
 const Comments = ({ blog }: IProps) => {
-
-  // const comments: IComment[] = [
-  //   {
-  //     _id: "123",
-  //     name: "Nafeo",
-  //     text: "Hellow Nafeo",
-  //     date: "2022-05-01T18:26:37.618Z",
-  //     comments: [
-  //       {
-  //         _id: "1233",
-  //         name: "Arish Mahmood Bhuiyanm",
-  //         text: "Hellow Arish",
-  //         date: "2022-05-01T18:26:37.618Z",
-  //         comments: [
-  //           {
-  //             _id: "12333",
-  //             name: "Arish Mahmood Bhuiyanm",
-  //             text: "Hellow Arish",
-  //             date: "2022-05-01T18:26:37.618Z",
-  //           },
-  //           {
-  //             _id: "123334",
-  //             name: "Arham Mahmood Bhuiyan",
-  //             text: "Hellow Arham",
-  //             date: "2022-05-01T18:26:37.618Z",
-  //           },
-  //         ],
-  //       },
-  //       {
-  //         _id: "1234",
-  //         name: "Arham Mahmood Bhuiyan",`
-  //         text: "Hellow Arham",
-  //         date: "2022-05-01T18:26:37.618Z",
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     _id: "1235",
-  //     name: "Snigdha",
-  //     text: "Fariha Haque",
-  //     date: "2022-05-01T18:26:37.618Z",
-  //   },
-  // ];
-
-
   return (
     <>
-      {blog.comments &&
-        blog.comments.map((comment, index) => {
+      {blog.comments
+        .slice(0)
+        .reverse()
+        .map((comment, index) => {
           return (
             <div key={`${comment.commentId}-${index}-div`}>
               <CommentItem
@@ -73,7 +29,7 @@ const Comments = ({ blog }: IProps) => {
                 date={comment.date}
                 comments={comment.comments}
                 previousCommentIds={[comment.commentId]}
-                blog= {blog}
+                blog={blog}
               />
               <br />
             </div>

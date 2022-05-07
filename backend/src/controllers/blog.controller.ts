@@ -4,8 +4,7 @@ import HttpStatusCode from '@/utils/httpStatusCodes';
 
 export const readBlogs = async (req: Request, res: Response) => {
     try {
-        const blogs = await Blog.find()
-        // const blogs = await Blog.find().sort({ create_date: -1 });
+        const blogs = await Blog.find().sort({ create_date: -1 });
         res.status(HttpStatusCode.OK).send(blogs);
     } catch (err) {
         res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).send(err);

@@ -43,7 +43,7 @@ const BlogListBlock = () => {
         </Grid>
         {blogList && (
           <>
-            <Grid item container xs={12}>
+            <Grid item container xs={12} minHeight={600}>
               <BlogItems
                 blogList={blogList}
                 pagination={paginationObject}
