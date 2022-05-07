@@ -8,7 +8,7 @@ import Skeleton from "react-loading-skeleton";
 import { useParams } from "react-router-dom";
 import Comments, { IComment } from "./Comments";
 
-interface IAddNewCommentForm extends IComment{
+export interface IAddNewCommentForm extends IComment {
   name: string;
   text: string;
   commentId: string;
@@ -23,7 +23,7 @@ const BlogDetailsBlock = () => {
     useState<IAddNewCommentForm>({
       name: "",
       text: "",
-      commentId: new Date().getTime().toString()
+      commentId: new Date().getTime().toString(),
     });
   const [isBlogLoading, setIsBlogLoading] = useState<boolean>(false);
 
@@ -32,7 +32,7 @@ const BlogDetailsBlock = () => {
       setIsBlogLoading(true);
       const { data: blog } = await PROTECTED_URL.get(`/blogs/${blogId}`);
 
-      console.log(blog, 'Current blog')
+      console.log(blog, "Current blog");
       if (mounted.current) {
         setBlog(blog);
         setIsBlogLoading(false);
@@ -60,7 +60,7 @@ const BlogDetailsBlock = () => {
         }
       );
 
-      setBlog(updatedBlog)
+      setBlog(updatedBlog);
     } catch (err) {
       console.log(err, "err");
     }
@@ -74,6 +74,7 @@ const BlogDetailsBlock = () => {
             <h2>{blog.title}</h2>
             <p>{blog.content}</p>
           </Grid>
+          {/* ADD a comment */}
           <Card>
             <CardContent>
               <Grid container spacing={2}>
@@ -89,7 +90,7 @@ const BlogDetailsBlock = () => {
                       setAddNewCommentForm({
                         ...addNewCommentForm,
                         name: e.currentTarget.value,
-                        commentId: new Date().getTime().toString()
+                        commentId: new Date().getTime().toString(),
                       })
                     }
                   />
@@ -105,7 +106,7 @@ const BlogDetailsBlock = () => {
                       setAddNewCommentForm({
                         ...addNewCommentForm,
                         text: e.currentTarget.value,
-                        commentId: new Date().getTime().toString()
+                        commentId: new Date().getTime().toString(),
                       })
                     }
                   />
@@ -119,6 +120,10 @@ const BlogDetailsBlock = () => {
                     loadingPosition="start"
                     startIcon={<SendIcon />}
                     variant="contained"
+                    disabled={
+                      addNewCommentForm.name === "" ||
+                      addNewCommentForm.text === ""
+                    }
                   >
                     Submit
                   </LoadingButton>
@@ -129,7 +134,7 @@ const BlogDetailsBlock = () => {
           <br />
           <Card>
             <CardContent>
-              <Comments comments={blog.comments}/>
+              <Comments comments={blog.comments} />
             </CardContent>
           </Card>
         </>

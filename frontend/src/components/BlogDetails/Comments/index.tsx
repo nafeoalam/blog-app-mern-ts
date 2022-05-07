@@ -68,6 +68,7 @@ const Comments = ({ comments }: IProps) => {
                 text={comment.text}
                 date={comment.date}
                 comments={comment.comments}
+                commentId={comment.commentId}
               />
               <br />
             </div>
