@@ -5,6 +5,7 @@
     "lerna": "^4.0.0"
   },
   "scripts": {
-    "start": "npx lerna run start --scope={backend,frontend}"
+    "initiate": "npx lerna add scope && npx lerna bootstrap",
+    "start": "npx lerna run start --scope={frontend,backend}"
   }
 }
