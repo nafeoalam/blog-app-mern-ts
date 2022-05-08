@@ -4,6 +4,7 @@
     "description": "Blog App Backend",
     "main": "dist/server.ts",
     "scripts": {
+        "start": "NODE_ENV=prod tsc && node -r ts-node/register/transpile-only -r tsconfig-paths/register build/index.js",
         "build": "NODE_ENV=prod tsc && node -r ts-node/register/transpile-only -r tsconfig-paths/register build/index.js",
         "prod": "yarn build",
         "dev": "nodemon -r tsconfig-paths/register ./src/server.ts"
