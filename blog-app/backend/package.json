@@ -4,7 +4,7 @@
     "description": "Blog App Backend",
     "main": "dist/server.ts",
     "scripts": {
-        "start": "NODE_ENV=prod tsc && node -r ts-node/register/transpile-only -r tsconfig-paths/register build/index.js",
+        "start": "nodemon -r tsconfig-paths/register ./src/server.ts",
         "build": "NODE_ENV=prod tsc && node -r ts-node/register/transpile-only -r tsconfig-paths/register build/index.js",
         "prod": "yarn build",
         "dev": "nodemon -r tsconfig-paths/register ./src/server.ts"
@@ -22,6 +22,7 @@
         "jsonwebtoken": "^8.5.1",
         "mongoose": "^6.3.0",
         "nodemon": "^2.0.15",
+        "scope": "^0.10.1",
         "tsconfig-paths": "^3.14.1"
     },
     "devDependencies": {

@@ -1,6 +1,7 @@
 node_modules/**/*
 build/**/*
 certs/**/*
+/node_modules
 
 *.jks
 *.p8
