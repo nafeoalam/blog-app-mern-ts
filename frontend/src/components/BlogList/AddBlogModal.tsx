@@ -6,9 +6,10 @@ import { Grid, Input } from "@mui/material";
 import { Dispatch, SetStateAction, useState } from "react";
 import LoadingButton from "@mui/lab/LoadingButton";
 import SaveIcon from "@mui/icons-material/Save";
-import axios from "axios";
 import { IBlog } from ".";
 import { PROTECTED_URL } from "config/axios.config";
+import { useDispatch } from "react-redux";
+import { getBlogs, setBlogs } from "redux/actions/blogActions";
 
 const style = {
   position: "absolute" as "absolute",
@@ -26,50 +27,51 @@ const style = {
 
 //#region If Nested Modal Needed
 
-function ChildModal() {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
+// function ChildModal() {
+//   const [open, setOpen] = React.useState(false);
+//   const handleOpen = () => {
+//     setOpen(true);
+//   };
+//   const handleClose = () => {
+//     setOpen(false);
+//   };
 
-  return (
-    <React.Fragment>
-      <Button onClick={handleOpen}>Open Child Modal</Button>
-      <Modal
-        hideBackdrop
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="child-modal-title"
-        aria-describedby="child-modal-description"
-      >
-        <Box sx={{ ...style, width: 200 }}>
-          <h2 id="child-modal-title">Text in a child modal</h2>
-          <p id="child-modal-description">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-          </p>
-          <Button onClick={handleClose}>Close Child Modal</Button>
-        </Box>
-      </Modal>
-    </React.Fragment>
-  );
-}
+//   return (
+//     <React.Fragment>
+//       <Button onClick={handleOpen}>Open Child Modal</Button>
+//       <Modal
+//         hideBackdrop
+//         open={open}
+//         onClose={handleClose}
+//         aria-labelledby="child-modal-title"
+//         aria-describedby="child-modal-description"
+//       >
+//         <Box sx={{ ...style, width: 200 }}>
+//           <h2 id="child-modal-title">Text in a child modal</h2>
+//           <p id="child-modal-description">
+//             Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+//           </p>
+//           <Button onClick={handleClose}>Close Child Modal</Button>
+//         </Box>
+//       </Modal>
+//     </React.Fragment>
+//   );
+// }
 
 //#endregion
 
 interface IProps {
   modalTitle: string;
-  setBlogList: Dispatch<SetStateAction<IBlog[]>>;
 }
-interface IAddNewPostForm {
+export interface IAddNewPostForm {
   title: string;
   content: string;
 }
 
-export default function AddBlogModal({ modalTitle, setBlogList }: IProps) {
+export default function AddBlogModal({ modalTitle }: IProps) {
+  const dispatch = useDispatch<any>();
   const [open, setOpen] = useState(false);
+
 
   const [addNewPostForm, setAddNewPostForm] = useState<IAddNewPostForm>({
     title: "",
@@ -78,11 +80,9 @@ export default function AddBlogModal({ modalTitle, setBlogList }: IProps) {
 
   const handleSubmit = async () => {
     try {
-      const { data: newBlog } = await PROTECTED_URL.post("/blogs", {
-        ...addNewPostForm,
-      });
+      await dispatch(setBlogs(addNewPostForm))
+      dispatch(getBlogs());
 
-      setBlogList((oldArray: IBlog[]) => [...oldArray, newBlog]);
       setOpen(false);
     } catch (err) {
       console.log(err, "err");

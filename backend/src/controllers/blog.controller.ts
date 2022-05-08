@@ -64,3 +64,46 @@ export const updateComments = async (req: Request, res: Response) => {
         res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).send(err);
     }
 };
+
+export const addComments = async (req: Request, res: Response) => {
+    try {
+        const { blogId } = req.params;
+        const { comments }: { comments: IComment } = req.body;
+
+        const update = await Blog.findByIdAndUpdate(
+            blogId,
+            {
+                $set: {
+                    comments: comments
+                }
+            },
+            { new: true }
+        );
+
+        res.status(HttpStatusCode.OK).send(update);
+    } catch (err) {
+        res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).send(err);
+    }
+};
+
+//TODO: 
+export const updateBlog = async (req: Request, res: Response) => {
+    try {
+        const { blogId } = req.params;
+        const { comments }: { comments: IComment } = req.body;
+
+        const update = await Blog.findByIdAndUpdate(
+            blogId,
+            {
+                $push: {
+                    comments: comments
+                }
+            },
+            { new: true }
+        );
+
+        res.status(HttpStatusCode.OK).send(update);
+    } catch (err) {
+        res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).send(err);
+    }
+};

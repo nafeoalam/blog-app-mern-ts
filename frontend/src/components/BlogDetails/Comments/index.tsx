@@ -1,65 +1,25 @@
+import { IBlog } from "components/BlogList";
 import CommentItem from "./CommentItem";
 
 export interface IComment {
   commentId: string;
   name: string;
   text: string;
-  date?: string;
-  comments?: Array<IComment>;
+  date: string;
+  comments: Array<IComment>;
 }
 
 interface IProps {
-  comments?: IComment[];
+  blog: IBlog;
 }
 
-const Comments = ({ comments }: IProps) => {
-  // const comments: IComment[] = [
-  //   {
-  //     _id: "123",
-  //     name: "Nafeo",
-  //     text: "Hellow Nafeo",
-  //     date: "2022-05-01T18:26:37.618Z",
-  //     comments: [
-  //       {
-  //         _id: "1233",
-  //         name: "Arish Mahmood Bhuiyanm",
-  //         text: "Hellow Arish",
-  //         date: "2022-05-01T18:26:37.618Z",
-  //         comments: [
-  //           {
-  //             _id: "12333",
-  //             name: "Arish Mahmood Bhuiyanm",
-  //             text: "Hellow Arish",
-  //             date: "2022-05-01T18:26:37.618Z",
-  //           },
-  //           {
-  //             _id: "123334",
-  //             name: "Arham Mahmood Bhuiyan",
-  //             text: "Hellow Arham",
-  //             date: "2022-05-01T18:26:37.618Z",
-  //           },
-  //         ],
-  //       },
-  //       {
-  //         _id: "1234",
-  //         name: "Arham Mahmood Bhuiyan",`
-  //         text: "Hellow Arham",
-  //         date: "2022-05-01T18:26:37.618Z",
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     _id: "1235",
-  //     name: "Snigdha",
-  //     text: "Fariha Haque",
-  //     date: "2022-05-01T18:26:37.618Z",
-  //   },
-  // ];
-
+const Comments = ({ blog }: IProps) => {
   return (
     <>
-      {comments &&
-        comments.map((comment, index) => {
+      {blog.comments
+        .slice(0)
+        .reverse()
+        .map((comment, index) => {
           return (
             <div key={`${comment.commentId}-${index}-div`}>
               <CommentItem
@@ -68,6 +28,8 @@ const Comments = ({ comments }: IProps) => {
                 text={comment.text}
                 date={comment.date}
                 comments={comment.comments}
+                previousCommentIds={[comment.commentId]}
+                blog={blog}
               />
               <br />
             </div>
