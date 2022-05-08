@@ -1,11 +1,12 @@
 {
   "name": "blog-app-mern-ts",
   "version": "1.0.0",
+  "license": "ISC",
   "dependencies": {
     "lerna": "^4.0.0"
   },
   "scripts": {
     "initiate": "npx lerna add scope && npx lerna bootstrap",
-    "start": "npx lerna run start --scope={frontend,backend}"
+    "start": "npx lerna run start --stream --scope={frontend,backend}"
   }
 }

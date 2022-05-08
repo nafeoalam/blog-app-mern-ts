@@ -2,7 +2,7 @@ import React from 'react'
 
 const HomeBlock = () => {
   return (
-    <div>HomeBlock</div>
+    <div>Home</div>
   )
 }
 

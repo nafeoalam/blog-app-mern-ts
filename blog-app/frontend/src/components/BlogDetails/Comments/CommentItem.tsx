@@ -11,11 +11,8 @@ import {
   Typography,
 } from "@mui/material";
 import { IComment } from ".";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { IAddNewCommentForm } from "components/BlogDetails";
-import { IRootState } from "redux/reducers";
-import { useDispatch, useSelector } from "react-redux";
-import { getBlogs } from "redux/actions/blogActions";
 import { IBlog } from "components/BlogList";
 import { PROTECTED_URL } from "config/axios.config";
 interface IProps {
@@ -37,7 +34,7 @@ const CommentItem = ({
 }: IProps) => {
   const [isReplyActive, setIsReplyActive] = useState<boolean>(false);
 
-  const [currentComments, setCurrentComments] = useState(comments)
+  const [currentComments, setCurrentComments] = useState(comments);
 
   const [addNewCommentForm, setAddNewCommentForm] =
     useState<IAddNewCommentForm>({
@@ -75,19 +72,16 @@ const CommentItem = ({
           ];
         }
 
-        await PROTECTED_URL.put(
-          `/blogs/${blog._id}/push-comments`,
-          {
-            comments: blog.comments,
-          }
-        );
+        await PROTECTED_URL.put(`/blogs/${blog._id}/push-comments`, {
+          comments: blog.comments,
+        });
 
-        setCurrentComments(currentComment.comments)
-
+        setCurrentComments(currentComment.comments);
       }
+      setIsReplyActive(false)
     } catch (err) {
       console.log(err, "err");
-    }
+    } 
   };
 
   return (
@@ -185,25 +179,28 @@ const CommentItem = ({
         </CardContent>
         {currentComments?.length > 0 && (
           <CardContent>
-            {currentComments.slice(0).reverse().map((comment, index) => {
-              const updatedCommentIds = previousCommentIds
-                ? [...previousCommentIds, comment.commentId]
-                : [comment.commentId];
-              return (
-                <div key={`${comment.commentId}-${index}-div`}>
-                  <CommentItem
-                    key={`${comment.commentId}-${index}`}
-                    name={comment.name}
-                    text={comment.text}
-                    date={comment.date}
-                    comments={comment.comments}
-                    previousCommentIds={updatedCommentIds}
-                    blog={blog}
-                  />
-                  <br />
-                </div>
-              );
-            })}
+            {currentComments
+              .slice(0)
+              .reverse()
+              .map((comment, index) => {
+                const updatedCommentIds = previousCommentIds
+                  ? [...previousCommentIds, comment.commentId]
+                  : [comment.commentId];
+                return (
+                  <div key={`${comment.commentId}-${index}-div`}>
+                    <CommentItem
+                      key={`${comment.commentId}-${index}`}
+                      name={comment.name}
+                      text={comment.text}
+                      date={comment.date}
+                      comments={comment.comments}
+                      previousCommentIds={updatedCommentIds}
+                      blog={blog}
+                    />
+                    <br />
+                  </div>
+                );
+              })}
           </CardContent>
         )}
       </Card>
