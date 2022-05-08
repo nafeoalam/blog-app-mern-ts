@@ -1,0 +1,7 @@
+{
+  "name": "blog-app-mern-ts",
+  "version": "1.0.0",
+  "dependencies": {
+    "lerna": "^4.0.0"
+  }
+}
