@@ -27,4 +27,14 @@
 4. Run `yarn start` to start dev API service on `localhost:3000`
 
 
+# Tech Stack: 
+- Monorepo with lerna
+- Typescript
+- NodeJs Express
+- ReactJs
+- MongoDB
+- Mongoose
+- Redux
+- Material UI
+
 
