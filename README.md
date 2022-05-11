@@ -10,7 +10,7 @@
 5. Run `yarn initiate` to install all the packages and bootstrap
 6. Run `yarn start` to start `APP` and `API`
 
-# Alternatively to run separately: 
+# Alternative way to run separately: 
 
 ## Start API server:
 1. Go to `backend` and create `.env` file
