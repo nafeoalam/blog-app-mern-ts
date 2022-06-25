@@ -1,8 +1,8 @@
 import express from 'express';
-import authenticate from '@/middleware/authentication';
-import { readBlogs, readBlog, createBlog, updateComments, addComments, updateBlog } from '@/controllers/blog.controller';
+import authenticate from '@src/middleware/authentication';
+import { readBlogs, readBlog, createBlog, updateComments, addComments, updateBlog } from '@src/controllers/blog.controller';
 
-const router = express.Router();
+const router = express.Router()
 
 
 router.put('/:blogId', updateBlog); //TODO

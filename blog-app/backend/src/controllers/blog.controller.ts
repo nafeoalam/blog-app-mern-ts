@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import Blog, { IComment } from '@/models/blog.model';
-import HttpStatusCode from '@/utils/httpStatusCodes';
+import Blog, { IComment } from '@src/models/blog.model';
+import HttpStatusCode from '@src/utils/httpStatusCodes';
 
 export const readBlogs = async (req: Request, res: Response) => {
     try {
@@ -28,7 +28,7 @@ export const createBlog = async (req: Request, res: Response) => {
     try {
         const { title, content } = req.body;
         if (!title || !content) {
-            return res.status(HttpStatusCode.UNPROCESSABLE_ENTITY).json({ error: 'Plase add all the fields' });
+            return res.status(HttpStatusCode.UNPROCESSABLE_ENTITY).json({ error: 'Please add all the fields' });
         }
 
         const post = new Blog({

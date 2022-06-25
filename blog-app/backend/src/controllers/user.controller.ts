@@ -1,4 +1,4 @@
-import User from '@/models/user.model';
+import User from '@src/models/user.model';
 
 import bcrypt from 'bcryptjs';
 import jwt, { Secret } from 'jsonwebtoken';
@@ -8,8 +8,8 @@ const JWT_SECRET: Secret = process.env.JWT_SECRET || 'JWT_SECRET';
 
 export const registerUser = async (req: Request, res: Response) => {
     try {
-        console.log('TEST')
-        const { email, password } = req.body;
+        console.log("Hello")
+        const { email, password } = req.body
 
         if (!email || !password) {
             return res.status(422).json({ err: 'Please add all the fields' });
